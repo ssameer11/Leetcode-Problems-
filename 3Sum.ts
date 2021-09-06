@@ -23,7 +23,7 @@ Constraints:
 0 <= nums.length <= 3000
 -105 <= nums[i] <= 105 -->
 
-
+// WITH USING HASHMAP
 function threeSum(nums: number[]): number[][] {
     nums = nums.sort((a,b) => (a-b));
     let result: number[][] = [];
@@ -52,3 +52,36 @@ function threeSum(nums: number[]): number[][] {
     }
     return result;
 };
+
+// WITHOUT USING HASHMAP
+
+
+function threeSum(nums: number[]): number[][] {
+    nums = nums.sort((a,b) => (a-b));
+    let result: number[][] = [];
+    for(let i = 0; i < nums.length-2; i++) {
+        let num1 = nums[i];
+        if(num1 == nums[i-1]) continue;
+
+        let p1 = i+1;
+        let p2 = nums.length-1;
+        let target = 0 - num1;
+        while(p1 < p2) {
+            let num2 = nums[p1];
+            let num3 = nums[p2];
+            if(num2 + num3 < target) {
+                p1++
+            } else if(num2 + num3 > target) {
+                p2--;
+            } else {
+                result.push([num1,num2,num3]);
+                p2--;
+                p1++;
+                while(p1 < p2 && nums[p1] == nums[p1-1]) p1++;
+                while(p1 < p2 && nums[p2] == nums[p2+1]) p2--;
+            }
+        }
+    }
+    return result;
+};
+
